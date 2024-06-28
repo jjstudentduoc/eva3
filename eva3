@@ -1,0 +1,83 @@
+import csv
+
+users = []
+prestamo = []
+pres_r = ""
+pcs = 30
+
+
+#imprimir
+def imp():
+    for idx, i in enumerate(users, start= 1):
+        print(f"{idx}, {i['rut']} nombre: {i['nombre']} documento: {i['documento']} numero de notebook: {i['numero de notebook']}")
+#prestamo
+def pres_not():
+    if pcs >= 0:
+        rut = input("ingrese el rut del alumno\n")
+        nom = input("ingrese el nombre del alumno\n") 
+        doc = input("que tipo de documento entrego el estudiante(pase o carnet)\n")
+        num_bok = input("ingrese el numero de el notbook\n")
+        users.append({'rut': rut, 'nombre': nom, 'documento': doc, 'numero de notebook': num_bok})
+    else:
+        print("no hay notebook para prestar")
+
+#documento
+
+#devolver
+def dev_not():
+    try:
+        imp()
+        opc = input("ingrese el rut del usuario que desea eliminar de la faz de la tierra")
+        for i in users:
+            if opc == i["rut"]:
+                users.remove(i)
+    except :
+        print("no se a encontrado este usuario")
+#modificar
+def modi():
+    opc = input("ingrese el rut del usuario\n")
+    for i in users:
+        if opc == i['rut']: 
+            print(i)
+            pc_a = input("ingrese el numero de notbook por el que sera cambiado")
+            i['numero de notebook'] = pc_a
+#sala
+def prof():
+    nom = input("ingrese el nombre del profesor\n")
+    sigla = input("ingrese la sigla del ramo\n")
+    sec = input("ingrese la seccion de su curso\n")
+    numc= nom, sigla, sec
+
+#imprimir
+def guard_csv():
+    with open("{nom}{sigla}{sec}.csv", "w", newline="") as file:
+        writer= csv.DictWriter(file, fieldnames=["rut", "nombre", "documento", "numero de notebook"])
+        writer.writeheader()
+        writer.writerows(users)
+
+#menu
+def main():
+    while True:
+        print("prestamos realizados")
+        imp()
+        print("")
+        print("menu de prestamo de notebook")
+        print("1) prestar notebook")
+        print("2) devolucion de notebook")
+        print("3) cambiar notebook")
+        print("4) guardar")
+        print("5) salir")
+        opc1 = int(input("ingrese una opcion\n"))
+
+        if opc1 == 1:
+            pres_not()
+        elif opc1 == 2:
+            dev_not()
+        elif opc1 == 3:
+            modi()
+        elif opc1 == 4: 
+            guard_csv()
+        elif opc1 == 5:
+            break
+
+main()
